@@ -71,6 +71,18 @@ ways:
     Client(url, token_provider=lambda: (fetch_token(), time.time() + 3600))
     ```
 
+    A provider of `unitycatalog.identity` gives its token when it is called, for a library that
+    takes the token as a string. That library does not get a new token when this one expires:
+    call the provider again for each table.
+
+    ```python
+    from deltalake import DeltaTable
+
+    provider = identity.azure("https://uc.example.com/.default")
+    storage_options = {"unity_workspace_url": url, "unity_access_token": provider()}
+    table = DeltaTable("uc://main.default.events", storage_options=storage_options)
+    ```
+
 - **A fixed token.** `token=`: a personal access token, or a token of the server.
 
     ```python

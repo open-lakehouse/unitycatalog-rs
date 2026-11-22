@@ -5039,8 +5039,7 @@ dependencies = [
 [[package]]
 name = "olai-http"
 version = "0.0.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "85ce661e687a6c951dfcbbed850ae4ec8c1695d7b0a49fa49dc2fabb8a97381d"
+source = "git+https://github.com/ion-elgreco/trestle?rev=07d0fafc6ff5d3a556a85cb686b98df1322123aa#07d0fafc6ff5d3a556a85cb686b98df1322123aa"
 dependencies = [
  "async-trait",
  "base64 0.22.1",

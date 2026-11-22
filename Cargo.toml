@@ -177,6 +177,9 @@ pyo3-build-config = "0.30"
 # buoyant_kernel 0.30.1 with its schema diff public under `internal-api`, for
 # the set-columns checks of uc-delta. Back to crates.io when a release has it.
 buoyant_kernel = { git = "https://github.com/ion-elgreco/delta-kernel-rs", rev = "9234d39f1c84a272df9de4f9e02bb0b3fe59df47" }
+# olai-http 0.0.11 with `Any` as a supertrait of `RequestSigner`, for the token of a
+# `TokenProvider` of the Python client. Back to crates.io when a release has it.
+olai-http = { git = "https://github.com/ion-elgreco/trestle", rev = "07d0fafc6ff5d3a556a85cb686b98df1322123aa" }
 
 [profile.release]
 opt-level = 3
