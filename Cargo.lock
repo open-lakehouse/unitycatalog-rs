@@ -5039,7 +5039,37 @@ dependencies = [
 [[package]]
 name = "olai-http"
 version = "0.0.11"
-source = "git+https://github.com/ion-elgreco/trestle?rev=07d0fafc6ff5d3a556a85cb686b98df1322123aa#07d0fafc6ff5d3a556a85cb686b98df1322123aa"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "85ce661e687a6c951dfcbbed850ae4ec8c1695d7b0a49fa49dc2fabb8a97381d"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "bytes",
+ "chrono",
+ "futures",
+ "http",
+ "humantime",
+ "hyper",
+ "percent-encoding",
+ "quick-xml 0.37.5",
+ "rand 0.9.4",
+ "reqwest 0.13.5",
+ "ring",
+ "rust-ini",
+ "rustls-pemfile",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.18",
+ "tokio",
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "olai-http"
+version = "0.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4bd54a7c2b6a2557599a431d3c12cd3d1780b726ea1549531f928bf441541874"
 dependencies = [
  "async-trait",
  "base64 0.22.1",
@@ -5184,7 +5214,7 @@ dependencies = [
  "chrono",
  "futures",
  "itertools 0.14.0",
- "olai-http",
+ "olai-http 0.0.11",
  "opensharing-common",
  "reqwest 0.13.5",
  "serde_json",
@@ -6019,7 +6049,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "343d3bd7056eda839b03204e68deff7d1b13aba7af2b2fd16890697274262ee7"
 dependencies = [
  "heck 0.5.0",
- "itertools 0.13.0",
+ "itertools 0.14.0",
  "log",
  "multimap",
  "petgraph 0.8.3",
@@ -6038,7 +6068,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "27c6023962132f4b30eb4c172c91ce92d933da334c59c23cddee82358ddafb0b"
 dependencies = [
  "anyhow",
- "itertools 0.13.0",
+ "itertools 0.14.0",
  "proc-macro2",
  "quote",
  "syn 2.0.117",
@@ -8949,7 +8979,7 @@ dependencies = [
  "hex",
  "jsonwebtoken",
  "libc",
- "olai-http",
+ "olai-http 0.0.14",
  "rand 0.8.6",
  "ratatui",
  "regex",
@@ -8983,7 +9013,8 @@ dependencies = [
  "hex",
  "hmac 0.12.1",
  "jsonwebtoken",
- "olai-http",
+ "olai-http 0.0.11",
+ "olai-http 0.0.14",
  "olai-http-wasm",
  "opensharing-client",
  "pyo3",
@@ -9078,7 +9109,7 @@ name = "uc-py"
 version = "0.0.0-dev"
 dependencies = [
  "futures",
- "olai-http",
+ "olai-http 0.0.14",
  "pyo3",
  "pyo3-async-runtimes",
  "pyo3-build-config",
