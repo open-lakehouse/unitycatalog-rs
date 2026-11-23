@@ -57,3 +57,6 @@ hmac = "0.12"
 hex.workspace = true
 # A Delta Sharing client, for what a recipient reads.
 opensharing-client.workspace = true
+# The olai-http of opensharing-client, for the HTTP client that it takes. Gone when
+# opensharing-client uses the olai-http of the workspace.
+opensharing-olai-http = { package = "olai-http", version = "0.0.11" }

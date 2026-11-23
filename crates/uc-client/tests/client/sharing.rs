@@ -2,8 +2,8 @@
 //! reads with a Delta Sharing client, signed in with its bearer token.
 
 use futures::TryStreamExt;
-use olai_http::CloudClient;
 use opensharing_client::client::DeltaSharingClient;
+use opensharing_olai_http::CloudClient;
 use url::Url;
 
 use uc_client::Client;

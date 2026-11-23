@@ -71,7 +71,7 @@ utoipa-swagger-ui = { version = "9", features = ["axum"] }
 reqwest = { version = "0.13", default-features = false, features = ["json", "rustls", "query", "form"] }
 # The transport of uc-client on native targets, and the bearer tokens of cloud identities (its
 # `identity` feature).
-olai-http = "0.0.11"
+olai-http = "0.0.14"
 # The transport of uc-client in the browser.
 olai-http-wasm = "0.0.7"
 # The protobuf runtime of the generated models (`just generate`), with their JSON.

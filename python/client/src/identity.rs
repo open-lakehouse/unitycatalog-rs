@@ -33,6 +33,26 @@ fn provider(provider: sources::Result<BearerCredentialProvider>) -> PyResult<Rus
     Ok(bearer(provider.map_err(error)?))
 }
 
+#[pymethods]
+impl RustTokenProvider {
+    /// The token of the provider now, a new one when the last is about to expire: for a
+    /// library that takes the token as a string. That library does not get a new token when
+    /// this one expires.
+    fn __call__(&self, py: Python<'_>) -> PyResult<String> {
+        let signer = self.signer.clone();
+        let token =
+            crate::codegen::runtime::block_on(
+                py,
+                async move { sources::bearer_token(&*signer).await },
+            )?;
+        token.map_err(error)?.ok_or_else(|| {
+            error(olai_http::Error::Generic {
+                source: "the token provider has no token".into(),
+            })
+        })
+    }
+}
+
 /// An Azure identity of the environment, for the scope `scope`, such as
 /// `https://uc.example.com/.default`: a service principal (`AZURE_TENANT_ID`, `AZURE_CLIENT_ID`,
 /// `AZURE_CLIENT_SECRET`), a workload identity (`AZURE_FEDERATED_TOKEN_FILE`), a managed identity

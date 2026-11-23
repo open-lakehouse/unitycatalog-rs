@@ -578,6 +578,8 @@ def test_token_providers(server, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("UC_TEST_TOKEN", server.token)
     from_env = identity.token_env("UC_TEST_TOKEN")
     Client(server.address, token_provider=from_env).list_tokens()
+    # Called, it gives the token: for a library that takes one as a string.
+    assert from_env() == server.token
     # A provider that returns something else fails the call, before the request.
     with pytest.raises(UnityCatalogError, match="token_provider"):
         Client(server.address, token_provider=lambda: 7).list_tokens()

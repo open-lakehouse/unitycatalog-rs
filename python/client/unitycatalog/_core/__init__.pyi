@@ -3082,6 +3082,12 @@ class TokenProvider:
     from any `olai_http::RequestSigner`, such as a bearer provider in a
     `BearerProviderSigner`.
     """
+    def __call__(self, /) -> str:
+        """
+        The token of the provider now, a new one when the last is about to expire: for a
+        library that takes the token as a string. That library does not get a new token when
+        this one expires.
+        """
 
 @final
 class UnauthenticatedError(UnityCatalogError):

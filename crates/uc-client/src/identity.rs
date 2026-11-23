@@ -10,6 +10,7 @@
 //! [`Client::new_with_bearer`](crate::Client::new_with_bearer); [`detect`] gives a signer for
 //! [`Client::new_with_signer`](crate::Client::new_with_signer).
 
+use std::any::Any;
 use std::collections::HashMap;
 use std::fmt;
 use std::sync::Arc;
@@ -542,6 +543,29 @@ impl RequestSigner for Later {
             }
         })
     }
+}
+
+/// The bearer token of `signer`, when it is a signer of this module: the signer of a bearer
+/// provider ([`BearerProviderSigner`]), or the signer of [`detect`]. `None` from the signer of
+/// [`detect`] while the server cannot say what it takes or when no identity fits, and from a
+/// signer of another type.
+///
+/// # Errors
+///
+/// When the provider cannot get a token.
+pub async fn bearer_token(signer: &dyn RequestSigner) -> Result<Option<String>> {
+    let signer: &(dyn Any + Send + Sync) = signer;
+    let provider = if let Some(signer) = signer.downcast_ref::<BearerProviderSigner>() {
+        &signer.0
+    } else if let Some(later) = signer.downcast_ref::<Later>() {
+        match later.chosen().await? {
+            Some(Some(provider)) => provider,
+            _ => return Ok(None),
+        }
+    } else {
+        return Ok(None);
+    };
+    Ok(Some(provider.get_credential().await?.token.clone()))
 }
 
 /// What [`detect`] would make.
@@ -1081,5 +1105,15 @@ mod tests {
             azure_identity(&service_principal, true),
             AzureIdentity::ClientSecret { .. }
         ));
+    }
+
+    #[tokio::test]
+    async fn a_signer_gives_its_bearer_token() {
+        let fixed = signer(BearerAuth::static_token("t"));
+        assert_eq!(bearer_token(&*fixed).await.unwrap().as_deref(), Some("t"));
+        // The signer of `detect`, and a server that does not answer: no token yet.
+        let away = Url::parse("http://127.0.0.1:1/").unwrap();
+        let later = Later::new(&env(&[]), &away, false, false);
+        assert_eq!(bearer_token(&later).await.unwrap(), None);
     }
 }
